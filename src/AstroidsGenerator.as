@@ -40,8 +40,8 @@ package
 		
 		private function addAstroid(e:flash.events.Event):void
 		{
-			var r: int = Math.random()*5 ;
-			trace("genAstroid:",r);
+			var r: int = Math.random()*6 ;
+//			trace("genAstroid:",r);
 			var genAstroid : Boolean = (r <= 2);
 			if (genAstroid) {
 				var tempAstroid : Astroid = new Astroid(m_world, generateAstroidImage(), new b2Vec2(Math.random()*Consts.space_size_X, -5));

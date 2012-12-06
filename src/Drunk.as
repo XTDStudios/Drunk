@@ -31,7 +31,7 @@ package
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);			
 		}
 		
-		private var t: Timer = new Timer(500);
+		private var t: Timer = new Timer(100);
 		
 		protected function onStageResize(event:Event):void
 		{

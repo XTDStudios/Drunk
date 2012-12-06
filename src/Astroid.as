@@ -55,7 +55,7 @@ package
 			m_body.SetPosition(position);
 			m_body.CreateFixture(m_fixtureDef);
 
-			m_body.ApplyImpulse(new b2Vec2(40*(Math.random()-0.5), 60*Math.random()+5),m_body.GetWorldCenter());
+			m_body.ApplyImpulse(new b2Vec2(40*(Math.random()-0.5), 45*Math.random()+30*Math.random()),m_body.GetWorldCenter());
 			
 			addEventListener(TouchEvent.TOUCH, onTouch2);
 		}
@@ -73,7 +73,7 @@ package
 					mouse_joint.bodyA = m_world.GetGroundBody();
 					mouse_joint.bodyB = m_body;
 					mouse_joint.target.Set(touch.globalX/Consts.pixels_in_a_meter, touch.globalY/Consts.pixels_in_a_meter);
-					mouse_joint.maxForce = 10000;
+					mouse_joint.maxForce = 5000;
 					mouseJoint = m_world.CreateJoint(mouse_joint) as b2MouseJoint;
 				}
 					
