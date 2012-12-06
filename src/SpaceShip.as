@@ -148,7 +148,7 @@ package
 			if (pos.y > 24)
 			{
 				m_body.ApplyImpulse(new b2Vec2(0, -10), m_body.GetWorldCenter());
-			} else	if (pos.y < 6)
+			} else	if (pos.y < 13)
 			{
 				m_body.ApplyImpulse(new b2Vec2(0, 10), m_body.GetWorldCenter());
 			}
