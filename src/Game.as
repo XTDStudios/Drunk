@@ -11,6 +11,7 @@ package
 		{
 			super();
 			m_astroidsGenerator = new AstroidsGenerator();
+			addChild(m_astroidsGenerator);
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
