@@ -20,6 +20,7 @@ package
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
+	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	
@@ -81,7 +82,7 @@ package
 		
 		private function initGame():void
 		{
-			var gravity:b2Vec2 = new b2Vec2(0.0, 10.0);
+			var gravity:b2Vec2 = new b2Vec2(0.0, 0.0);
 			m_world = new b2World(gravity, false);
 			
 			// astroidsGenerator
@@ -89,7 +90,7 @@ package
 			addChild(m_astroidsGenerator);
 			m_astroidsGenerator.start();
 			
-			spaceShip = new SpaceShip();
+			spaceShip = new SpaceShip(m_world,Image.fromBitmap(new Assets.SpaceShipGFX()),new b2Vec2(10,10));
 			spaceShip.x=200;
 			spaceShip.y=500;
 			
