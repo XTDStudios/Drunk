@@ -26,6 +26,7 @@ package
 		private var m_dmtManager		: DMTManager;
 		private var m_isActive			: Boolean;
 		private var m_skyAndStars		: DisplayObject;
+		private var m_smallStars		: DisplayObject;
 		
 		public var m_velocityIterations	: int = 10;
 		public var m_positionIterations	: int = 10;
@@ -87,6 +88,11 @@ package
 			
 			addChild(spaceShip);
 			makeDebugDraw();
+			
+			m_smallStars = m_dmtManager.getStarlingDisplayObject("smallStars");
+			m_smallStars.x = 0; 
+			m_skyAndStars.y = 0; 
+			addChild(m_smallStars);
 			
 			m_isActive = true;
 			addEventListener(starling.events.Event.ENTER_FRAME, Update);
