@@ -1,17 +1,22 @@
 package
 {
+	import com.xtdstudios.common.assetsFactory.AssetsFactoryFromAssetsLoader;
+	import com.xtdstudios.common.assetsLoader.AssetsLoaderFromByteArray;
+	
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.utils.ByteArray;
 	
 	import Box2D.Collision.b2AABB;
-	import Box2D.Collision.Shapes.b2Shape;
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2DebugDraw;
 	import Box2D.Dynamics.b2Fixture;
-	import Box2D.Dynamics.b2FixtureDef;
 	import Box2D.Dynamics.b2World;
 	import Box2D.Dynamics.Joints.b2MouseJoint;
 	import Box2D.Dynamics.Joints.b2MouseJointDef;
+	
+	import assets.Assets;
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
@@ -27,12 +32,16 @@ package
 		public var m_velocityIterations	: int = 10;
 		public var m_positionIterations	: int = 10;
 		public var m_timeStep			: Number = 1.0/60.0;
+
+		private var m_assetsLoader:AssetsLoaderFromByteArray;
+
+		private var m_assetsFactory:AssetsFactoryFromAssetsLoader;
 		
 		public function Game()
 		{
 			mouseJoint = null;
 			super();
-			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
 		/**
@@ -40,9 +49,30 @@ package
 		 * @param event
 		 * 
 		 */
-		private function onAddedToStage(event:Event):void
+		private function onAddedToStage(event:starling.events.Event):void
 		{
-			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			removeEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
+			loadAssets();
+		}
+		
+		private function loadAssets():void
+		{
+			// assets loader
+			
+			var byteArrays	: Vector.<ByteArray> = new Vector.<ByteArray>;
+			byteArrays.push(new Assets.AssetsSwf());
+			
+			m_assetsLoader = new AssetsLoaderFromByteArray(byteArrays);
+			m_assetsFactory = new AssetsFactoryFromAssetsLoader(m_assetsLoader);
+			
+			m_assetsLoader.addEventListener(flash.events.Event.COMPLETE, onLoadingComplete);
+			
+			m_assetsLoader.initializeAllAssets();
+		}
+		
+		protected function onLoadingComplete(event:flash.events.Event):void
+		{
+			trace(m_assetsLoader.getAvailableAssetsNames());
 			
 			initGame();
 		}
@@ -59,10 +89,10 @@ package
 			
 			makeDebugDraw();
 			
-			addEventListener(Event.ENTER_FRAME, Update);
+			addEventListener(starling.events.Event.ENTER_FRAME, Update);
 		}
 		
-		public function Update(e:Event):void
+		public function Update(e:starling.events.Event):void
 		{
 			// we make the world run
 			m_world.Step(m_timeStep, m_velocityIterations, m_positionIterations);

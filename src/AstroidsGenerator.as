@@ -7,9 +7,13 @@ package
 	import Box2D.Dynamics.b2FixtureDef;
 	import Box2D.Dynamics.b2World;
 	
+	import assets.Assets;
+	
 	import starling.core.Starling;
+	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.Sprite;
+	import starling.textures.Texture;
 
 	public class AstroidsGenerator extends Sprite
 	{
@@ -23,14 +27,26 @@ package
 		
 		public function start():void
 		{
-			var tempAstroid1 : Astroid = new Astroid(m_world, new b2Vec2(8.3, 1));
+			var tempAstroid1 : Astroid = new Astroid(m_world, generateAstroidImage(), new b2Vec2(8.3, 1));
 			addChild(tempAstroid1);	
 			
-			var tempAstroid2 : Astroid = new Astroid(m_world, new b2Vec2(9.4, 5));
+			var tempAstroid2 : Astroid = new Astroid(m_world, generateAstroidImage(), new b2Vec2(9.4, 5));
 			addChild(tempAstroid2);	
 			
-			var tempAstroid3 : Astroid = new Astroid(m_world, new b2Vec2(10, 8));
+			var tempAstroid3 : Astroid = new Astroid(m_world, generateAstroidImage(), new b2Vec2(10, 8));
 			addChild(tempAstroid3);	
+		}
+		
+		private function generateAstroidImage():Image
+		{
+			
+			var texture : Texture = Texture.fromBitmap(new Assets.AstroidGFX());
+
+			var image :Image = new Image(texture);
+			image.width = 50;
+			image.height = 60;
+
+			return image;
 		}
 		
 		private function addGround():void

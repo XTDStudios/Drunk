@@ -7,11 +7,8 @@ package
 	import Box2D.Dynamics.b2FixtureDef;
 	import Box2D.Dynamics.b2World;
 	
-	import assets.Assets;
-	
 	import starling.display.Image;
 	import starling.display.Sprite;
-	import starling.textures.Texture;
 	
 	public class Astroid extends Sprite
 	{
@@ -19,27 +16,21 @@ package
 		private var m_fixtureDef	: b2FixtureDef;
 		private var m_boxShape		: b2PolygonShape;
 		private var m_world			: b2World;
-		private var m_image			: Image;
 		
 		private var m_bodyDef:b2BodyDef;
 		
-		public function Astroid(b2dWorld:b2World, position:b2Vec2)
+		public function Astroid(b2dWorld:b2World, image:Image, position:b2Vec2)
 		{
 			m_world = b2dWorld;
 			super();	
 			
-			var texture : Texture = Texture.fromBitmap(new Assets.AstroidGFX());
-			m_image = new Image(texture);
-			addChild(m_image);
+			addChild(image);
 			
-			m_image.width = 50;
-			m_image.height = 60;
-			
-			m_image.x = -width/2.0;
-			m_image.y = -height/2.0;
+			image.x = -image.width/2.0;
+			image.y = -image.height/2.0;
 
-			var AstroidWidth  : Number = m_image.width/Consts.pixels_in_a_meter/2;
-			var AstroidHeight : Number = m_image.height/Consts.pixels_in_a_meter/2;
+			var AstroidWidth  : Number = image.width/Consts.pixels_in_a_meter/2;
+			var AstroidHeight : Number = image.height/Consts.pixels_in_a_meter/2;
 			
 			// Box
 			m_boxShape = new b2PolygonShape();
