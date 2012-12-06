@@ -37,6 +37,8 @@ package
 
 		private var m_assetsFactory:AssetsFactoryFromAssetsLoader;
 		
+		private var spaceShip:SpaceShip
+		
 		public function Game()
 		{
 			mouseJoint = null;
@@ -87,6 +89,11 @@ package
 			addChild(m_astroidsGenerator);
 			m_astroidsGenerator.start();
 			
+			spaceShip = new SpaceShip();
+			spaceShip.x=200;
+			spaceShip.y=500;
+			
+			addChild(spaceShip);
 			makeDebugDraw();
 			
 			addEventListener(starling.events.Event.ENTER_FRAME, Update);
