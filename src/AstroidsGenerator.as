@@ -1,5 +1,9 @@
 package
 {
+	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
+	
 	import Box2D.Collision.Shapes.b2PolygonShape;
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.b2Body;
@@ -7,45 +11,44 @@ package
 	import Box2D.Dynamics.b2FixtureDef;
 	import Box2D.Dynamics.b2World;
 	
-	import assets.Assets;
-	
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.display.Sprite;
-	import starling.textures.Texture;
+	import starling.events.Event;
 
 	public class AstroidsGenerator extends Sprite
 	{
 		private var m_world:b2World;
+		private var m_dmtManager:DMTManager;
+		private var m_timer:Timer;
 
-		public function AstroidsGenerator(b2dWorld:b2World)
+		public function AstroidsGenerator(b2dWorld:b2World, dmtManager:DMTManager)
 		{
 			m_world = b2dWorld;
-			addGround();
+			m_dmtManager = dmtManager;
+//			addGround();
 		}
 		
 		public function start():void
 		{
-			var tempAstroid1 : Astroid = new Astroid(m_world, generateAstroidImage(), new b2Vec2(8.3, 1));
-			addChild(tempAstroid1);	
-			
-			var tempAstroid2 : Astroid = new Astroid(m_world, generateAstroidImage(), new b2Vec2(9.4, 5));
-			addChild(tempAstroid2);	
-			
-			var tempAstroid3 : Astroid = new Astroid(m_world, generateAstroidImage(), new b2Vec2(10, 8));
-			addChild(tempAstroid3);	
+			m_timer = new Timer(500);
+			m_timer.addEventListener(TimerEvent.TIMER, addAstroid)
+			m_timer.start()
+				
+			addAstroid(null);
+		}
+		
+		private function addAstroid(e:flash.events.Event):void
+		{
+			var tempAstroid : Astroid = new Astroid(m_world, generateAstroidImage(), new b2Vec2(Math.random()*16, 0));
+			addChild(tempAstroid);	
 		}
 		
 		private function generateAstroidImage():Image
 		{
-			
-			var texture : Texture = Texture.fromBitmap(new Assets.AstroidGFX());
-
-			var image :Image = new Image(texture);
-			image.width = 50;
-			image.height = 60;
-
+			var imageIdx : int = Math.random()*5+1;
+			var image :Image = m_dmtManager.getStarlingDisplayObject("astroid"+imageIdx.toString()) as Image;
 			return image;
 		}
 		

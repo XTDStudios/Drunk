@@ -29,9 +29,6 @@ package
 			super();	
 			
 			addChild(image);
-			
-			image.x = -image.width/2.0;
-			image.y = -image.height/2.0;
 
 			var AstroidWidth  : Number = image.width/Consts.pixels_in_a_meter/2;
 			var AstroidHeight : Number = image.height/Consts.pixels_in_a_meter/2;
@@ -45,6 +42,7 @@ package
 			m_fixtureDef.density = 1.0;
 			m_fixtureDef.friction = 0.5;
 			m_fixtureDef.restitution = 0.2;
+			m_fixtureDef.userData = "Astroid";
 			
 			m_bodyDef = new b2BodyDef();
 			m_bodyDef.type = b2Body.b2_dynamicBody;
@@ -54,6 +52,8 @@ package
 			m_body = m_world.CreateBody(m_bodyDef);
 			m_body.SetPosition(position);
 			m_body.CreateFixture(m_fixtureDef);
+
+			m_body.ApplyImpulse(new b2Vec2(20*(Math.random()-0.5), 50*Math.random()),m_body.GetWorldCenter());
 			
 			addEventListener(TouchEvent.TOUCH, onTouch);
 		}

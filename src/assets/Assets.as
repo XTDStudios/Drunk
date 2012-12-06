@@ -15,7 +15,7 @@ package assets
 		[Embed(source = "fire/texture.png")]
 		public static const FireParticle:Class;
 		
-		[Embed(source="steroid.swf", mimeType="application/octet-stream")] 
+		[Embed(source="DrunkSpaceShip.swf", mimeType="application/octet-stream")] 
 		public static const AssetsSwf:Class;
 	}
 }
