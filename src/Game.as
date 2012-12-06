@@ -17,6 +17,7 @@ package
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.text.TextField;
 	
 	public class Game extends starling.display.Sprite
 	{
@@ -25,6 +26,7 @@ package
 		private var mouseJoint			: b2MouseJoint;
 		private var m_dmtManager		: DMTManager;
 		private var m_isActive			: Boolean;
+		private var m_skyAndStars		: DisplayObject;
 		
 		public var m_velocityIterations	: int = 10;
 		public var m_positionIterations	: int = 10;
@@ -65,6 +67,9 @@ package
 		
 		private function initGame():void
 		{
+			m_skyAndStars = m_dmtManager.getStarlingDisplayObject("skyAndStars");
+			addChild(m_skyAndStars);
+			
 			var gravity:b2Vec2 = new b2Vec2(0.0, 0.0);
 			m_world = new b2World(gravity, false);
 			
@@ -89,6 +94,10 @@ package
 		protected function onHitShip(event:flash.events.Event):void
 		{
 			m_isActive = false;
+			var textfield : TextField = new TextField(350, 100, "Don't drink and Fly^%@!", "Arial", 30, 0xffffff);
+			textfield.x = (stage.stageWidth-textfield.width)/2;
+			textfield.y = stage.stageHeight/2;
+			addChild(textfield);
 		}
 		
 		public function Update(e:starling.events.Event):void
