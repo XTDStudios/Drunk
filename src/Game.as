@@ -89,10 +89,10 @@ package
 			addChild(spaceShip);
 			makeDebugDraw();
 			
-			m_smallStars = m_dmtManager.getStarlingDisplayObject("smallStars");
-			m_smallStars.x = 0; 
-			m_skyAndStars.y = 0; 
-			addChild(m_smallStars);
+//			m_smallStars = m_dmtManager.getStarlingDisplayObject("smallStars");
+//			m_smallStars.x = 0; 
+//			m_skyAndStars.y = 0; 
+//			addChild(m_smallStars);
 			
 			m_isActive = true;
 			addEventListener(starling.events.Event.ENTER_FRAME, Update);
@@ -100,7 +100,7 @@ package
 		
 		protected function onHitShip(event:flash.events.Event):void
 		{
-			m_isActive = false;
+			//m_isActive = false;
 			var textfield : TextField = new TextField(350, 100, "Don't drink and Fly^%@!", "Arial", 30, 0xffffff);
 			textfield.x = (stage.stageWidth-textfield.width)/2;
 			textfield.y = stage.stageHeight/2;
