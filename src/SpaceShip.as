@@ -31,7 +31,10 @@ package
 		private var m_fixtureDef	: b2FixtureDef;
 		private var m_boxShape		: b2PolygonShape;
 		private var m_world			: b2World;
-		private var m_bodyDef:b2BodyDef;
+		private var m_bodyDef		: b2BodyDef;
+
+		private var shipWidth		: Number;
+		private var shipHeight		: Number;
 		
 		
 		public function SpaceShip(b2dWorld:b2World, spaceshipImage:DisplayObject, position:b2Vec2)
@@ -65,7 +68,7 @@ package
 		
 		protected function changeDir(e:TimerEvent):void
 		{
-			m_body.ApplyImpulse(new b2Vec2(30*(Math.random()-0.5), 10*(Math.random()-0.5)),m_body.GetWorldCenter());
+			m_body.ApplyImpulse(new b2Vec2(200*(Math.random()-0.5), 70*(Math.random()-0.5)),m_body.GetWorldCenter());
 		}
 		
 		
@@ -80,18 +83,13 @@ package
 		}
 		
 		
-		
-		
-		
-		
-		
 		private function createShip(spaceshipImage:DisplayObject, position:b2Vec2):void
 		{
 			
 			this.spaceshipImage = spaceshipImage
 				
-			var shipWidth  : Number = spaceshipImage.width/Consts.pixels_in_a_meter/2;
-			var shipHeight : Number = spaceshipImage.height/Consts.pixels_in_a_meter/2;
+			shipWidth = spaceshipImage.width/Consts.pixels_in_a_meter/2;
+			shipHeight = spaceshipImage.height/Consts.pixels_in_a_meter/2;
 			
 			// Box
 			m_boxShape = new b2PolygonShape();
@@ -131,21 +129,18 @@ package
 		}
 
 		
-		
-		
-		
 		public function updatePosition():void
 		{
 			var pos : b2Vec2 = m_body.GetPosition();
-			if (pos.x > 14)
+			if (pos.x > Consts.space_size_X-(shipWidth*2))
 			{
 				m_body.ApplyImpulse(new b2Vec2(-10, 0), m_body.GetWorldCenter());
-			} else if (pos.x < 1)
+			} else if (pos.x < shipWidth*2)
 			{
 				m_body.ApplyImpulse(new b2Vec2(10, 0), m_body.GetWorldCenter());
 			}
 					
-			if (pos.y > 24)
+			if (pos.y > 40)
 			{
 				m_body.ApplyImpulse(new b2Vec2(0, -10), m_body.GetWorldCenter());
 			} else	if (pos.y < 13)
@@ -155,7 +150,7 @@ package
 				
 			ps.emitAngle = this.spaceshipImage.rotation + 1;
 			ps.emitterX = spaceshipImage.x;
-			ps.emitterY = spaceshipImage.y; 
+			ps.emitterY = spaceshipImage.y;
 		}
 	}
 }

@@ -18,15 +18,15 @@ package
 		private var m_assetsLoader	: AssetsLoaderFromByteArray;
 		private var m_assetsFactory	: AssetsFactoryFromAssetsLoader;
 		private var m_dmt			: DMTBasic;
-		private var m_screenWidth		: int; 
-		private var m_screenHeight	: int;
 
 		public function DMTManager(screenWidth: int, screenHeight: int)
 		{
 			super();
-			m_screenWidth = screenWidth;
-			m_screenHeight = screenHeight;
-			Consts.pixels_in_a_meter = screenWidth / Consts.space_size;
+			Consts.screenSize_X = screenWidth;
+			Consts.screenSize_Y = screenHeight;
+			Consts.space_size_X = 30;
+			Consts.pixels_in_a_meter = screenWidth / Consts.space_size_X;
+			Consts.space_size_Y = Consts.space_size_X / (screenWidth/screenHeight)
 		}
 
 		public function initialize():void
@@ -59,14 +59,14 @@ package
 			
 
 			// adding the assets to rasterize
-			itemsToRaster.push(createAsset("spaceShip", 2*Consts.space_size, 4*Consts.space_size)); 
+			itemsToRaster.push(createAsset("spaceShip", 2*Consts.pixels_in_a_meter, 4*Consts.pixels_in_a_meter)); 
 			itemsToRaster.push(createAsset("astroid1", 40, 60));
 			itemsToRaster.push(createAsset("astroid2", 30, 40));
 			itemsToRaster.push(createAsset("astroid3", 80, 80));
 			itemsToRaster.push(createAsset("astroid4", 80, 40));
 			itemsToRaster.push(createAsset("astroid5", 70, 70));
-			itemsToRaster.push(createAsset("skyAndStars", m_screenWidth, m_screenHeight));  
-			itemsToRaster.push(createAsset("clouds", m_screenWidth, m_screenHeight));  
+			itemsToRaster.push(createAsset("skyAndStars", Consts.screenSize_X, Consts.screenSize_Y));  
+			itemsToRaster.push(createAsset("clouds", Consts.screenSize_X, Consts.screenSize_Y));  
 			
 			m_dmt = new DMTBasic("Drunk", false, "1");
 			m_dmt.itemsToRaster = itemsToRaster;
