@@ -1,7 +1,10 @@
 package
 {
+	import flash.desktop.NativeApplication;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	
 	import Box2D.Collision.b2AABB;
 	import Box2D.Common.Math.b2Vec2;
@@ -119,11 +122,20 @@ package
 		
 		protected function onHitShip(event:flash.events.Event):void
 		{
-			//m_isActive = false;
+			m_isActive = false;
 			var textfield : TextField = new TextField(350, 100, "Don't drink and Fly^%@!", "Arial", 30, 0xffffff);
 			textfield.x = (stage.stageWidth-textfield.width)/2;
 			textfield.y = stage.stageHeight/2;
 			addChild(textfield);
+			
+			var myTimer : Timer = new Timer(3500,0);
+			myTimer.addEventListener(TimerEvent.TIMER, CloseGame)
+			myTimer.start()
+		}
+		
+		protected function CloseGame(event:TimerEvent):void
+		{
+			NativeApplication.nativeApplication.exit();
 		}
 		
 		public function Update(e:starling.events.Event):void
