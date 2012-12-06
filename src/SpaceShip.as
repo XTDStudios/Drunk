@@ -13,8 +13,9 @@ package
 	import assets.Assets;
 	
 	import starling.core.Starling;
-	import starling.display.Image;
+	import starling.display.DisplayObject;
 	import starling.display.Sprite;
+	import starling.events.Event;
 	import starling.extensions.PDParticleSystem;
 	import starling.textures.Texture;
 	
@@ -23,7 +24,7 @@ package
 	{
 		
 		private var ps:PDParticleSystem
-		private var spaceshipImage:Image
+		private var spaceshipImage:DisplayObject
 		private var myTimer:Timer;
 		
 		private var m_body			: b2Body;
@@ -33,40 +34,38 @@ package
 		private var m_bodyDef:b2BodyDef;
 		
 		
-		public function SpaceShip(b2dWorld:b2World, spaceshipImage:Image, position:b2Vec2)
+		public function SpaceShip(b2dWorld:b2World, spaceshipImage:DisplayObject, position:b2Vec2)
 		{
 
 			m_world = b2dWorld;
 				
 			super();
-			trace ("HELLO");
-
 			createire()
 			
-			createShip(spaceshipImage,position);
+			createShip(spaceshipImage, position);
 			
 			myTimer = new Timer(3000,0);
 			myTimer.addEventListener(TimerEvent.TIMER,changeDir)
 			myTimer.start()
 			
+			changeDir(null);
 			startFly()
 		}
 
 		
 		private function startFly():void
 		{
-			
+			addEventListener(Event.ENTER_FRAME, onEnterFrame);
+		}
+		
+		private function onEnterFrame(e:Event):void
+		{
+			updatePosition();
 		}
 		
 		protected function changeDir(e:TimerEvent):void
 		{
-
-			
-			//(100*(Math.random()-0.5),100*(Math.random()-0.5))
-			m_body.ApplyImpulse(new b2Vec2(20*(Math.random()-0.5),0),m_body.GetWorldCenter());
-			//m_body.ApplyImpulse(force,point)
-	
-			
+			m_body.ApplyImpulse(new b2Vec2(200*(Math.random()-0.5), 200*(Math.random()-0.5)),m_body.GetWorldCenter());
 		}
 		
 		
@@ -86,7 +85,7 @@ package
 		
 		
 		
-		private function createShip( spaceshipImage:Image, position:b2Vec2):void
+		private function createShip(spaceshipImage:DisplayObject, position:b2Vec2):void
 		{
 			
 			this.spaceshipImage = spaceshipImage
@@ -103,17 +102,17 @@ package
 			m_fixtureDef.density = 1.0;
 			m_fixtureDef.friction = 0.5;
 			m_fixtureDef.restitution = 0.2;
+			m_fixtureDef.userData = "Ship";
+
 			
 			m_bodyDef = new b2BodyDef();
 			m_bodyDef.type = b2Body.b2_dynamicBody;
-			m_bodyDef.userData = this;
+			m_bodyDef.userData = spaceshipImage;
 			
 			// this is the key line, we pass as a userData the starling.display.Quad
 			m_body = m_world.CreateBody(m_bodyDef);
 			m_body.SetPosition(position);
 			m_body.CreateFixture(m_fixtureDef);
-			spaceshipImage.x=-spaceshipImage.width*0.5;
-			spaceshipImage.y=-spaceshipImage.height*0.5;
 			
 			
 			addChild(spaceshipImage)
@@ -125,27 +124,38 @@ package
 			var psConfig:XML = XML(new Assets.FireConfig());
 			var psTexture:Texture = Texture.fromBitmap(new Assets.FireParticle());
 			
-			ps = new PDParticleSystem(psConfig, psTexture);
-			ps.start();
-			Starling.juggler.add(ps);
-			addChild(ps);
+//			ps = new PDParticleSystem(psConfig, psTexture);
+//			ps.start();
+//			Starling.juggler.add(ps);
+//			addChild(ps);
 		}
 
 		
 		
 		
 		
-		public function setPosition(_x:Number,_y:Number):void
+		public function updatePosition():void
 		{
-			spaceshipImage.x = _x-80;
-			spaceshipImage.y= _y;
-
-			
+			var pos : b2Vec2 = m_body.GetPosition();
+			if (pos.x > 14)
+			{
+				m_body.ApplyImpulse(new b2Vec2(-100, 0), m_body.GetWorldCenter());
+			} else if (pos.x < 1)
+			{
+				m_body.ApplyImpulse(new b2Vec2(100, 0), m_body.GetWorldCenter());
+			}
+					
+			if (pos.y > 20)
+			{
+				m_body.ApplyImpulse(new b2Vec2(0, -100), m_body.GetWorldCenter());
+			} else	if (pos.y < 6)
+			{
+				m_body.ApplyImpulse(new b2Vec2(0, 100), m_body.GetWorldCenter());
+			}
+				
+//			ps.emitAngle = this.spaceshipImage.rotation+0.88;
+//			ps.emitterX = spaceshipImage.x;
+//			ps.emitterY = spaceshipImage.y+50;
 		}
-		
-		
-		
-
-		
 	}
 }

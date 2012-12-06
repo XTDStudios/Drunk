@@ -24,6 +24,7 @@ package
 		private var m_world				: b2World;
 		private var mouseJoint			: b2MouseJoint;
 		private var m_dmtManager		: DMTManager;
+		private var m_isActive			: Boolean;
 		
 		public var m_velocityIterations	: int = 10;
 		public var m_positionIterations	: int = 10;
@@ -33,6 +34,7 @@ package
 		
 		public function Game()
 		{
+			m_isActive = false;
 			mouseJoint = null;
 			super();
 			addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
@@ -66,23 +68,34 @@ package
 			var gravity:b2Vec2 = new b2Vec2(0.0, 0.0);
 			m_world = new b2World(gravity, false);
 			
+			var astroidContactListener : AstroidContactListener = new AstroidContactListener();
+			m_world.SetContactListener(astroidContactListener);
+			astroidContactListener.eventDispatcher.addEventListener(AstroidContactListener.HIT_EVENT, onHitShip);
+			
 			// astroidsGenerator
 			m_astroidsGenerator = new AstroidsGenerator(m_world, m_dmtManager);
 			addChild(m_astroidsGenerator);
 			m_astroidsGenerator.start();
 			
-			spaceShip = new SpaceShip(m_world,Image.fromBitmap(new Assets.SpaceShipGFX()),new b2Vec2(10,10));
-			spaceShip.x=200;
-			spaceShip.y=500;
+			spaceShip = new SpaceShip(m_world, m_dmtManager.getStarlingDisplayObject("spaceShip") as DisplayObject,new b2Vec2(10,20));
 			
 			addChild(spaceShip);
 			makeDebugDraw();
 			
+			m_isActive = true;
 			addEventListener(starling.events.Event.ENTER_FRAME, Update);
+		}
+		
+		protected function onHitShip(event:flash.events.Event):void
+		{
+			m_isActive = false;
 		}
 		
 		public function Update(e:starling.events.Event):void
 		{
+			if (m_isActive==false)
+				return;
+			
 			// we make the world run
 			m_world.Step(m_timeStep, m_velocityIterations, m_positionIterations);
 			m_world.ClearForces();
@@ -107,9 +120,17 @@ package
 					sprite.x = bb.GetPosition().x * Consts.pixels_in_a_meter;
 					sprite.y = bb.GetPosition().y * Consts.pixels_in_a_meter;
 					sprite.rotation = bb.GetAngle();
+					
+					if (sprite is Astroid)
+					{
+						if (sprite.y>stage.stageHeight)
+						{
+							// remove the astroid
+						}
+					}
 				}
 			}
-			m_world.DrawDebugData();
+			//m_world.DrawDebugData();
 		}
 		
 		private function makeDebugDraw():void
