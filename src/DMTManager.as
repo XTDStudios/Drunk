@@ -53,14 +53,14 @@ package
 			var itemsToRaster : Vector.<flash.display.DisplayObject> = new Vector.<flash.display.DisplayObject>;
 			
 			// adding the assets to rasterize
-			itemsToRaster.push(createAsset("spaceShip", 50, 90));
+			itemsToRaster.push(createAsset("spaceShip", 50, 90)); 
 			itemsToRaster.push(createAsset("astroid1", 50, 60));
 			itemsToRaster.push(createAsset("astroid2", 50, 60));
 			itemsToRaster.push(createAsset("astroid3", 50, 60));
 			itemsToRaster.push(createAsset("astroid4", 50, 60));
 			itemsToRaster.push(createAsset("astroid5", 50, 60));
 			itemsToRaster.push(createAsset("skyAndStars", 480, 780));  
-//			itemsToRaster.push(createAsset("smallStars", 480, 780));  
+			itemsToRaster.push(createAsset("clouds", 480, 780));  
 			
 			m_dmt = new DMTBasic("Drunk", false, "1");
 			m_dmt.itemsToRaster = itemsToRaster;

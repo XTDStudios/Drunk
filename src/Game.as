@@ -14,9 +14,13 @@ package
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
+	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.extensions.krecha.ScrollImage;
+	import starling.extensions.krecha.ScrollTile;
 	import starling.text.TextField;
+	import starling.textures.Texture;
 	
 	public class Game extends starling.display.Sprite
 	{
@@ -26,11 +30,13 @@ package
 		private var m_dmtManager		: DMTManager;
 		private var m_isActive			: Boolean;
 		private var m_skyAndStars		: DisplayObject;
-		private var m_smallStars		: DisplayObject;
 		
 		public var m_velocityIterations	: int = 10;
 		public var m_positionIterations	: int = 10;
 		public var m_timeStep			: Number = 1.0/60.0;
+		private var m_clouds			: ScrollImage;
+		private var m_cloudsTile1		: ScrollTile;
+		private var m_cloudsTile2		: ScrollTile;
 
 		private var spaceShip:SpaceShip
 		
@@ -72,6 +78,24 @@ package
 			m_skyAndStars.y = 0; 
 			addChild(m_skyAndStars);
 			
+			var stars : DisplayObject = m_dmtManager.getStarlingDisplayObject("clouds");
+			var starsTexture : Texture = (stars as Image).texture;
+			m_clouds = new ScrollImage(480, 780);
+			m_cloudsTile1 = m_clouds.addLayer( new ScrollTile(starsTexture, true ) );
+			m_cloudsTile1.paralax = 1.3;
+			m_cloudsTile1.alpha = 0.6;
+			
+			m_cloudsTile2 = m_clouds.addLayer( new ScrollTile(starsTexture, true ) );
+			m_cloudsTile2.alpha = 1;
+			m_cloudsTile2.color = 0x4444ff;
+			m_cloudsTile2.paralax = 1.8;
+			m_cloudsTile2.scaleX = 1.3;
+			m_cloudsTile2.scaleY = 1.3;
+			
+			addChild(m_clouds);
+
+			
+			
 			var gravity:b2Vec2 = new b2Vec2(0.0, 0.0);
 			m_world = new b2World(gravity, false);
 			
@@ -88,11 +112,6 @@ package
 			
 			addChild(spaceShip);
 			makeDebugDraw();
-			
-//			m_smallStars = m_dmtManager.getStarlingDisplayObject("smallStars");
-//			m_smallStars.x = 0; 
-//			m_skyAndStars.y = 0; 
-//			addChild(m_smallStars);
 			
 			m_isActive = true;
 			addEventListener(starling.events.Event.ENTER_FRAME, Update);
@@ -111,6 +130,9 @@ package
 		{
 			if (m_isActive==false)
 				return;
+			
+			m_cloudsTile1.offsetY++;
+			m_cloudsTile2.offsetY++;
 			
 			// we make the world run
 			m_world.Step(m_timeStep, m_velocityIterations, m_positionIterations);
