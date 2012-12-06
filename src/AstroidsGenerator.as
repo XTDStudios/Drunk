@@ -1,10 +1,5 @@
 package
 {
-<<<<<<< HEAD
-	import Box2D.Dynamics.b2World;
-	
-	import starling.core.Starling;
-=======
 	import Box2D.Collision.Shapes.b2PolygonShape;
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.b2Body;
@@ -14,7 +9,6 @@ package
 	
 	import starling.core.Starling;
 	import starling.display.Quad;
->>>>>>> 179a1e55716e21392c4a81c2713d003a2cea4681
 	import starling.display.Sprite;
 
 	public class AstroidsGenerator extends Sprite
@@ -24,20 +18,11 @@ package
 		public function AstroidsGenerator(b2dWorld:b2World)
 		{
 			m_world = b2dWorld;
-<<<<<<< HEAD
-=======
 			addGround();
->>>>>>> 179a1e55716e21392c4a81c2713d003a2cea4681
 		}
 		
 		public function start():void
 		{
-<<<<<<< HEAD
-			var tempAstroid : Astroid = new Astroid(m_world);
-			tempAstroid.x = 300;
-			tempAstroid.y = 300;
-			addChild(tempAstroid);	
-=======
 			var tempAstroid1 : Astroid = new Astroid(m_world, new b2Vec2(8.3, 1));
 			addChild(tempAstroid1);	
 			
@@ -78,7 +63,6 @@ package
 			body.CreateFixture(fixtureDef);
 			
 			Starling.current.stage.addChild(bodyDef.userData);
->>>>>>> 179a1e55716e21392c4a81c2713d003a2cea4681
 		}
 	}
 }
