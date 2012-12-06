@@ -131,8 +131,8 @@ package
 			if (m_isActive==false)
 				return;
 			
-			m_cloudsTile1.offsetY++;
-			m_cloudsTile2.offsetY++;
+			m_cloudsTile1.offsetY = m_cloudsTile1.offsetY + 0.5;
+			m_cloudsTile2.offsetY = m_cloudsTile1.offsetY + 0.5;
 			
 			// we make the world run
 			m_world.Step(m_timeStep, m_velocityIterations, m_positionIterations);
