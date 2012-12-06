@@ -2,10 +2,11 @@ package
 {
 	import starling.display.Sprite;
 	import starling.events.Event;
-	
+		
 	public class Game extends Sprite
 	{
 		private var m_astroidsGenerator	: AstroidsGenerator;
+		private var spaceShip:SpaceShip
 		
 		public function Game()
 		{
@@ -13,8 +14,10 @@ package
 			m_astroidsGenerator = new AstroidsGenerator();
 			addChild(m_astroidsGenerator);
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			
+			spaceShip = new SpaceShip();
+			addChild(spaceShip)
 		}
-		
 		/**
 		 * On Game class added to stage. 
 		 * @param event
