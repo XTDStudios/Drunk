@@ -41,9 +41,9 @@ package
 			
 			m_fixtureDef = new b2FixtureDef();
 			m_fixtureDef.shape = m_boxShape;
-			m_fixtureDef.density = 1.0;
-			m_fixtureDef.friction = 0.5;
-			m_fixtureDef.restitution = 0.2;
+			m_fixtureDef.density = AstroidWidth*AstroidHeight/10+1;
+			m_fixtureDef.friction = 0.0;
+			m_fixtureDef.restitution = 0.5;
 			m_fixtureDef.userData = "Astroid";
 			
 			m_bodyDef = new b2BodyDef();
@@ -55,7 +55,7 @@ package
 			m_body.SetPosition(position);
 			m_body.CreateFixture(m_fixtureDef);
 
-			m_body.ApplyImpulse(new b2Vec2(20*(Math.random()-0.5), 50*Math.random()),m_body.GetWorldCenter());
+			m_body.ApplyImpulse(new b2Vec2(40*(Math.random()-0.5), 60*Math.random()+5),m_body.GetWorldCenter());
 			
 			addEventListener(TouchEvent.TOUCH, onTouch2);
 		}

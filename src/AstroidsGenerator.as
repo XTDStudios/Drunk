@@ -31,7 +31,7 @@ package
 		
 		public function start():void
 		{
-			m_timer = new Timer(1000);
+			m_timer = new Timer(200);
 			m_timer.addEventListener(TimerEvent.TIMER, addAstroid)
 			m_timer.start()
 				
@@ -40,8 +40,13 @@ package
 		
 		private function addAstroid(e:flash.events.Event):void
 		{
-			var tempAstroid : Astroid = new Astroid(m_world, generateAstroidImage(), new b2Vec2(Math.random()*16, 0));
-			addChild(tempAstroid);	
+			var r: int = Math.random()*5 ;
+			trace("genAstroid:",r);
+			var genAstroid : Boolean = (r <= 2);
+			if (genAstroid) {
+				var tempAstroid : Astroid = new Astroid(m_world, generateAstroidImage(), new b2Vec2(Math.random()*Consts.space_size_X, -5));
+				addChild(tempAstroid);
+			}
 		}
 		
 		private function generateAstroidImage():Image

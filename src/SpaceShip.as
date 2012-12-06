@@ -51,7 +51,7 @@ package
 			myTimer.addEventListener(TimerEvent.TIMER,changeDir)
 			myTimer.start()
 			
-			changeDir(null);
+			changeDir();
 			startFly()
 		}
 
@@ -66,9 +66,10 @@ package
 			updatePosition();
 		}
 		
-		protected function changeDir(e:TimerEvent):void
+		protected function changeDir(e:TimerEvent = null):void
 		{
-			m_body.ApplyImpulse(new b2Vec2(200*(Math.random()-0.5), 70*(Math.random()-0.5)),m_body.GetWorldCenter());
+			var pos : b2Vec2 = m_body.GetPosition();
+			m_body.ApplyImpulse(new b2Vec2(100*(Math.random()-pos.x/(Consts.space_size_X/2)), 70*(Math.random()-0.5)),m_body.GetWorldCenter());
 		}
 		
 		
@@ -101,7 +102,6 @@ package
 			m_fixtureDef.friction = 0.5;
 			m_fixtureDef.restitution = 0.2;
 			m_fixtureDef.userData = "Ship";
-
 			
 			m_bodyDef = new b2BodyDef();
 			m_bodyDef.type = b2Body.b2_dynamicBody;
@@ -111,7 +111,6 @@ package
 			m_body = m_world.CreateBody(m_bodyDef);
 			m_body.SetPosition(position);
 			m_body.CreateFixture(m_fixtureDef);
-			
 			
 			addChild(spaceshipImage)
 		}
@@ -134,10 +133,14 @@ package
 			var pos : b2Vec2 = m_body.GetPosition();
 			if (pos.x > Consts.space_size_X-(shipWidth*4))
 			{
-				m_body.ApplyImpulse(new b2Vec2(-10, 0), m_body.GetWorldCenter());
+//				m_body.ApplyImpulse(new b2Vec2(0, 0), m_body.GetWorldCenter());
+				m_body.SetLinearVelocity(new b2Vec2(0, 0));
+				changeDir();
 			} else if (pos.x < shipWidth*4)
 			{
-				m_body.ApplyImpulse(new b2Vec2(10, 0), m_body.GetWorldCenter());
+//				m_body.ApplyImpulse(new b2Vec2(0, 0), m_body.GetWorldCenter());
+				m_body.SetLinearVelocity(new b2Vec2(0, 0));
+				changeDir();
 			}
 					
 			if (pos.y > Consts.space_size_Y-shipHeight)
