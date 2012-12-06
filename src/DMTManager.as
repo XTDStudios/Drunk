@@ -59,7 +59,7 @@ package
 			itemsToRaster.push(createAsset("astroid3", 50, 60));
 			itemsToRaster.push(createAsset("astroid4", 50, 60));
 			itemsToRaster.push(createAsset("astroid5", 50, 60));
-			itemsToRaster.push(createAsset("skyAndStars", 480, 780));
+			itemsToRaster.push(createAsset("skyAndStars", 480, 780));  
 			
 			m_dmt = new DMTBasic("Drunk", false, "1");
 			m_dmt.itemsToRaster = itemsToRaster;

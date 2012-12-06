@@ -14,7 +14,6 @@ package
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
-	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.text.TextField;
@@ -68,6 +67,8 @@ package
 		private function initGame():void
 		{
 			m_skyAndStars = m_dmtManager.getStarlingDisplayObject("skyAndStars");
+			m_skyAndStars.x = 0; 
+			m_skyAndStars.y = 0; 
 			addChild(m_skyAndStars);
 			
 			var gravity:b2Vec2 = new b2Vec2(0.0, 0.0);
