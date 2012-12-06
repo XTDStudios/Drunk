@@ -4,6 +4,8 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	
 	import starling.core.Starling;
 	
@@ -21,17 +23,26 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			stage.addEventListener(Event.RESIZE, onStageResize);
-			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 
 		protected function onAddedToStage(event:Event):void
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			
+			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);			
 		}
+		
+		private var t: Timer = new Timer(500);
 		
 		protected function onStageResize(event:Event):void
 		{
+			t.addEventListener(TimerEvent.TIMER,initGame);
+			t.start();
+		}
+		
+		protected function initGame(event:TimerEvent):void
+		{
+			t.removeEventListener(TimerEvent.TIMER,initGame);
+			t.stop();
 			stage.removeEventListener(Event.RESIZE, onStageResize);
 			// Initialize Starling object.
 			myStarling = new Starling(Game, stage);
@@ -43,7 +54,7 @@ package
 			myStarling.showStats = true;
 			
 			// Start Starling Framework.
-			myStarling.start();
+			myStarling.start();			
 		}
 	}
 }

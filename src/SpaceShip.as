@@ -132,18 +132,18 @@ package
 		public function updatePosition():void
 		{
 			var pos : b2Vec2 = m_body.GetPosition();
-			if (pos.x > Consts.space_size_X-(shipWidth*2))
+			if (pos.x > Consts.space_size_X-(shipWidth*4))
 			{
 				m_body.ApplyImpulse(new b2Vec2(-10, 0), m_body.GetWorldCenter());
-			} else if (pos.x < shipWidth*2)
+			} else if (pos.x < shipWidth*4)
 			{
 				m_body.ApplyImpulse(new b2Vec2(10, 0), m_body.GetWorldCenter());
 			}
 					
-			if (pos.y > 40)
+			if (pos.y > Consts.space_size_Y-shipHeight)
 			{
 				m_body.ApplyImpulse(new b2Vec2(0, -10), m_body.GetWorldCenter());
-			} else	if (pos.y < 13)
+			} else	if (pos.y < Consts.space_size_Y/2)
 			{
 				m_body.ApplyImpulse(new b2Vec2(0, 10), m_body.GetWorldCenter());
 			}

@@ -114,6 +114,11 @@ package
 			
 			m_isActive = true;
 			addEventListener(starling.events.Event.ENTER_FRAME, Update);
+			
+			var t1: TextField = new TextField(100, 15, Consts.screenSize_X+" X "+Consts.screenSize_Y, "Arial", 9, 0xffffff);
+			t1.x=Consts.screenSize_X-100;
+			addChild(t1);
+
 		}
 		
 		protected function onHitShip(event:flash.events.Event):void
