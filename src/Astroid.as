@@ -26,9 +26,6 @@ package
 			
 			addChild(image);
 			
-			image.x = -image.width/2.0;
-			image.y = -image.height/2.0;
-
 			var AstroidWidth  : Number = image.width/Consts.pixels_in_a_meter/2;
 			var AstroidHeight : Number = image.height/Consts.pixels_in_a_meter/2;
 			

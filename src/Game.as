@@ -1,11 +1,7 @@
 package
 {
-	import com.xtdstudios.common.assetsFactory.AssetsFactoryFromAssetsLoader;
-	import com.xtdstudios.common.assetsLoader.AssetsLoaderFromByteArray;
-	
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.utils.ByteArray;
 	
 	import Box2D.Collision.b2AABB;
 	import Box2D.Common.Math.b2Vec2;
@@ -15,8 +11,6 @@ package
 	import Box2D.Dynamics.b2World;
 	import Box2D.Dynamics.Joints.b2MouseJoint;
 	import Box2D.Dynamics.Joints.b2MouseJointDef;
-	
-	import assets.Assets;
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
@@ -28,15 +22,12 @@ package
 		private var m_astroidsGenerator	: AstroidsGenerator;
 		private var m_world				: b2World;
 		private var mouseJoint			: b2MouseJoint;
+		private var m_dmtManager		: DMTManager;
 		
 		public var m_velocityIterations	: int = 10;
 		public var m_positionIterations	: int = 10;
 		public var m_timeStep			: Number = 1.0/60.0;
 
-		private var m_assetsLoader:AssetsLoaderFromByteArray;
-
-		private var m_assetsFactory:AssetsFactoryFromAssetsLoader;
-		
 		private var spaceShip:SpaceShip
 		
 		public function Game()
@@ -54,28 +45,18 @@ package
 		private function onAddedToStage(event:starling.events.Event):void
 		{
 			removeEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
-			loadAssets();
+			initDMT();
 		}
 		
-		private function loadAssets():void
+		private function initDMT():void
 		{
-			// assets loader
-			
-			var byteArrays	: Vector.<ByteArray> = new Vector.<ByteArray>;
-			byteArrays.push(new Assets.AssetsSwf());
-			
-			m_assetsLoader = new AssetsLoaderFromByteArray(byteArrays);
-			m_assetsFactory = new AssetsFactoryFromAssetsLoader(m_assetsLoader);
-			
-			m_assetsLoader.addEventListener(flash.events.Event.COMPLETE, onLoadingComplete);
-			
-			m_assetsLoader.initializeAllAssets();
+			m_dmtManager = new DMTManager();
+			m_dmtManager.addEventListener(flash.events.Event.COMPLETE, onDMTComplete);
+			m_dmtManager.initialize();
 		}
 		
-		protected function onLoadingComplete(event:flash.events.Event):void
+		protected function onDMTComplete(event:flash.events.Event):void
 		{
-			trace(m_assetsLoader.getAvailableAssetsNames());
-			
 			initGame();
 		}
 		
@@ -85,7 +66,7 @@ package
 			m_world = new b2World(gravity, false);
 			
 			// astroidsGenerator
-			m_astroidsGenerator = new AstroidsGenerator(m_world);
+			m_astroidsGenerator = new AstroidsGenerator(m_world, m_dmtManager);
 			addChild(m_astroidsGenerator);
 			m_astroidsGenerator.start();
 			

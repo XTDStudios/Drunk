@@ -6,7 +6,6 @@ package
 	
 	import starling.core.Starling;
 	import starling.display.Image;
-	import starling.display.MovieClip;
 	import starling.display.Sprite;
 	import starling.extensions.PDParticleSystem;
 	import starling.textures.Texture;

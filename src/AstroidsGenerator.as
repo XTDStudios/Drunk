@@ -18,10 +18,12 @@ package
 	public class AstroidsGenerator extends Sprite
 	{
 		private var m_world:b2World;
+		private var m_dmtManager:DMTManager;
 
-		public function AstroidsGenerator(b2dWorld:b2World)
+		public function AstroidsGenerator(b2dWorld:b2World, dmtManager:DMTManager)
 		{
 			m_world = b2dWorld;
+			m_dmtManager = dmtManager;
 			addGround();
 		}
 		
@@ -39,13 +41,8 @@ package
 		
 		private function generateAstroidImage():Image
 		{
-			
-			var texture : Texture = Texture.fromBitmap(new Assets.AstroidGFX());
-
-			var image :Image = new Image(texture);
-			image.width = 50;
-			image.height = 60;
-
+			var imageIdx : int = Math.random()*5+1;
+			var image :Image = m_dmtManager.getStarlingDisplayObject("astroid"+imageIdx.toString()) as Image;
 			return image;
 		}
 		
