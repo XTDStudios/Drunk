@@ -5,9 +5,12 @@ package
 	
 	public class Game extends Sprite
 	{
+		private var m_astroidsGenerator	: AstroidsGenerator;
+		
 		public function Game()
 		{
 			super();
+			m_astroidsGenerator = new AstroidsGenerator();
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
@@ -20,12 +23,12 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
-			initScreens();
+			initGame();
 		}
 		
-		private function initScreens():void
+		private function initGame():void
 		{
-			
+			m_astroidsGenerator.start();
 		}
 		
 	}
