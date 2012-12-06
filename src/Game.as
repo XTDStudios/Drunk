@@ -64,7 +64,7 @@ package
 		
 		private function initDMT():void
 		{
-			m_dmtManager = new DMTManager();
+			m_dmtManager = new DMTManager(stage.stageWidth, stage.stageHeight);
 			m_dmtManager.addEventListener(flash.events.Event.COMPLETE, onDMTComplete);
 			m_dmtManager.initialize();
 		}
@@ -83,7 +83,8 @@ package
 			
 			var stars : DisplayObject = m_dmtManager.getStarlingDisplayObject("clouds");
 			var starsTexture : Texture = (stars as Image).texture;
-			m_clouds = new ScrollImage(480, 780);
+			m_clouds = new ScrollImage(stage.stageWidth, stage.stageHeight);
+			m_clouds = new ScrollImage(stage.stageWidth, stage.stageHeight);
 			m_cloudsTile1 = m_clouds.addLayer( new ScrollTile(starsTexture, true ) );
 			m_cloudsTile1.paralax = 1.3;
 			m_cloudsTile1.alpha = 0.6;

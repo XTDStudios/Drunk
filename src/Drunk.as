@@ -20,6 +20,7 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
+			stage.addEventListener(Event.RESIZE, onStageResize);
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 
@@ -27,6 +28,11 @@ package
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
+		}
+		
+		protected function onStageResize(event:Event):void
+		{
+			stage.removeEventListener(Event.RESIZE, onStageResize);
 			// Initialize Starling object.
 			myStarling = new Starling(Game, stage);
 			

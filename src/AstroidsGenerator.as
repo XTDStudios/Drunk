@@ -31,7 +31,7 @@ package
 		
 		public function start():void
 		{
-			m_timer = new Timer(2000);
+			m_timer = new Timer(1000);
 			m_timer.addEventListener(TimerEvent.TIMER, addAstroid)
 			m_timer.start()
 				
