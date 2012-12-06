@@ -7,7 +7,7 @@ package
 	
 	import starling.core.Starling;
 	
-	[SWF(frameRate="60", width="480", height="800", backgroundColor="0x333333")]
+	[SWF(frameRate="60", width="480", height="780", backgroundColor="0x333333")]
 	public class Drunk extends Sprite
 	{
 		private var myStarling:Starling;
