@@ -65,7 +65,7 @@ package
 		
 		protected function changeDir(e:TimerEvent):void
 		{
-			m_body.ApplyImpulse(new b2Vec2(200*(Math.random()-0.5), 200*(Math.random()-0.5)),m_body.GetWorldCenter());
+			m_body.ApplyImpulse(new b2Vec2(10*(Math.random()-0.5), 10*(Math.random()-0.5)),m_body.GetWorldCenter());
 		}
 		
 		
@@ -139,18 +139,18 @@ package
 			var pos : b2Vec2 = m_body.GetPosition();
 			if (pos.x > 14)
 			{
-				m_body.ApplyImpulse(new b2Vec2(-100, 0), m_body.GetWorldCenter());
+				m_body.ApplyImpulse(new b2Vec2(-50, 0), m_body.GetWorldCenter());
 			} else if (pos.x < 1)
 			{
-				m_body.ApplyImpulse(new b2Vec2(100, 0), m_body.GetWorldCenter());
+				m_body.ApplyImpulse(new b2Vec2(50, 0), m_body.GetWorldCenter());
 			}
 					
 			if (pos.y > 20)
 			{
-				m_body.ApplyImpulse(new b2Vec2(0, -100), m_body.GetWorldCenter());
+				m_body.ApplyImpulse(new b2Vec2(0, -50), m_body.GetWorldCenter());
 			} else	if (pos.y < 6)
 			{
-				m_body.ApplyImpulse(new b2Vec2(0, 100), m_body.GetWorldCenter());
+				m_body.ApplyImpulse(new b2Vec2(0, 50), m_body.GetWorldCenter());
 			}
 				
 //			ps.emitAngle = this.spaceshipImage.rotation+0.88;
